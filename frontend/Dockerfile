@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 #stage 2
 FROM node:21-slim as nodeapp
@@ -22,17 +22,11 @@ RUN npm run build
 
 FROM nginx
 
-WORKDIR /usr/share/nginx/nimbusfusion.line.pm/html
-
-RUN rm -rf /etc/nginx/conf.d/*
-
-COPY nimbusfusion.line.pm.conf /etc/nginx/conf.d/
+WORKDIR /usr/share/nginx/html
 
 RUN rm -rf ./*
 
 EXPOSE 5173
-
-EXPOSE 443
 
 COPY --from=nodeapp /app/dist .
 
