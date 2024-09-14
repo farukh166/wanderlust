@@ -1,4 +1,4 @@
-#step 1
+#stage 1
 FROM node:21 as backend
 
 WORKDIR /app
@@ -6,7 +6,6 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
-
 
 #stage 2
 FROM node:21-slim
@@ -19,4 +18,4 @@ COPY .env.sample .env
 
 EXPOSE 3010
 
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
