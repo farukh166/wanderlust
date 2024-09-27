@@ -1,4 +1,5 @@
-FROM node:21
+#Stage-1
+FROM node:21 as frontend
 
 WORKDIR /app
 
@@ -6,7 +7,14 @@ COPY . .
 
 RUN npm install
 
-COPY .env.sample .env
+#Stage-2
+FROM node:21-slim
+
+WORKDIR /app
+
+COPY --from=frontend /app .
+
+COPY .env.docker .env
 
 EXPOSE 5173
 
